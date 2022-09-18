@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Settings">
+        <setting label="Mopidy Host:Port" type="text" id="mopidy_host" default="localhost:6680" />
+        <setting label="Fail Count" type="number" id="fail_count" default="5" />
+        <setting label="Check interval (sec)" type="number" id="check_interval" default="60" />
+    </category>
+</settings>

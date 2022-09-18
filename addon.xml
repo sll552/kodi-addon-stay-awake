@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.stay-awake" name="Stay Awake" version="1.0.0" provider-name="sll552">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.requests" version="1.2.7"/>
+	</requires>
+	<extension point="xbmc.service" library="addon.py"/>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Prevent Kodi from suspending</summary>
+		<description lang="en">Checks playing state of a mopidy server and inhibits suspending while music is playing</description>
+		<license>GNU General Public License, v2</license>
+		<source>https://github.com/sll552/script.service.stay-awake</source>
+		<website>https://github.com/sll552/script.service.stay-awake</website>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.png</fanart>
+		</assets>
+	</extension>
+</addon>
