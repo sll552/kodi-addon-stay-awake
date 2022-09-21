@@ -40,7 +40,9 @@ jobs:
       - name: Package Addon
         id: package
         run: |
-          submit-addon -b $KODI_VERSION -z -s "${{ github.event.repository.name }}"
+          pwd
+          tree
+          submit-addon -b $KODI_VERSION -z "${{ github.event.repository.name }}" -s
           echo ::set-output name=addon-zip::$(ls *.zip)
       - name: Update Release
         uses: softprops/action-gh-release@v1
