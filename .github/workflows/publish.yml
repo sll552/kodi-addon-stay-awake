@@ -1,0 +1,49 @@
+name: Kodi Addon
+
+on: [push, pull_request]
+
+env:
+  KODI_VERSION: matrix
+
+jobs:
+  kodi-addon-checker:
+    runs-on: ubuntu-latest
+    name: Kodi addon checker
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Kodi addon checker validation
+      id: kodi-addon-checker
+      uses: xbmc/action-kodi-addon-checker@v1.1
+      with:
+        kodi-version: ${{ env.KODI_VERSION }}
+        is-pr: ${{ github.event_name == 'pull_request' }}
+        addon-id: ${{ github.event.repository.name }}
+
+  kodi-addon-package:
+    if: ${{ github.event_name != 'pull_request' }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install git+https://github.com/romanvm/kodi-addon-submitter.git
+      - name: Package Addon
+        id: package
+        run: |
+          submit-addon -b $KODI_VERSION -z -s "${{ github.event.repository.name }}"
+          echo ::set-output name=addon-zip::$(ls *.zip)
+      - name: Update Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "${{ steps.package.outputs.addon-zip }}"
+          draft: true
